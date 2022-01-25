@@ -9,6 +9,7 @@ const settingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  last_update : String
 });
 
 export const Settings = mongoose.model("settings", settingSchema);
