@@ -7,12 +7,11 @@ import { Game3rbFeed } from "../model/Game3rbFeed";
 export default class Game3rbController {
   static async getFeed(req: Request, res: Response) {
     try {
-      const feed: {}[] = await Game3rbFeed.find({}, {__v: 0}).exec();
+      const feed: {}[] = await Game3rbFeed.find({}, { __v: 0 }).exec();
 
       return res.status(200).send({
         data: feed,
       });
-
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -42,12 +41,16 @@ export default class Game3rbController {
 
           const createMany = await Game3rbFeed.insertMany(insertedFeed);
 
-          return res.send(createMany);
+          return res.status(200).send({
+            data: createMany,
+            msg: `New feed fetched ${createMany.length}`,
+          });
         }
-        return res.send([]);
+        return res.status(200).send({
+          data: [],
+          msg: `New feed fetched : 0`,
+        });
       }
-
-      //   return res.json(data);
     } catch (err) {
       return res.send(err);
     }
