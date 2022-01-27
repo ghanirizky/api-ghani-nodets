@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { TFeed } from "../common/types"
 
 const feedSchema = new mongoose.Schema({
   title: {
@@ -17,4 +18,5 @@ const feedSchema = new mongoose.Schema({
   isoDate : String
 });
 
-export const Game3rbFeed = mongoose.model("game3rb_feed", feedSchema);
+export const Game3rbFeed = mongoose.model<TFeed>("game3rb_feed", feedSchema);
+

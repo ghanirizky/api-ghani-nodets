@@ -9,8 +9,8 @@ export default class UserController {
     try {
       const { user_name, password: plain_password } = req.body;
 
-      const gen_salt = await bcrypt.genSaltSync(SALT);
-      const hash_password = await bcrypt.hashSync(plain_password, gen_salt);
+      const gen_salt: string = await bcrypt.genSaltSync(SALT);
+      const hash_password: string= await bcrypt.hashSync(plain_password, gen_salt);
 
       if (plain_password.length < 5)
         return res
@@ -30,6 +30,7 @@ export default class UserController {
       return res.status(200).send({
         status: "Ok",
       });
+
     } catch (error: any) {
       if (error.code === 11000)
         return res.status(400).send({
@@ -43,7 +44,7 @@ export default class UserController {
     try {
       const { user_name, password } = req.body;
 
-      const user = await User.findOne({ user_name }).lean();
+      const user = await User.findOne({ user_name });
 
       if (!user)
         return res.status(400).send({
@@ -57,7 +58,7 @@ export default class UserController {
           msg: "Invalid Password",
         });
 
-        const token = JWT.sign({
+        const token: string = JWT.sign({
             id: user._id,
             user_name: user.user_name
           
