@@ -1,9 +1,9 @@
 import "dotenv/config";
 import express, { Express, Request, Response } from "express";
-import Game3rbRouter from "./routes/game3rb";
+import routes from "./routes"
 import mongoose from "mongoose";
 import morgan from "morgan";
-import { DB_URI } from "./common/constant";
+import { DB_URI } from "./config/config";
 
 const app: Express = express();
 
@@ -16,16 +16,17 @@ const app: Express = express();
   }
 })()
 
-
-app.use(morgan("tiny"));
+app.use(morgan("combined"));
 app.use(express.json());
-app.use("/game3rb", Game3rbRouter);
+
+//Routes
+app.use("/", routes)
 
 app.use((req: Request, res: Response) => {
   res.status(404).send("No route found with those value!");
 });
 
-//Routes
+
 app.listen(8000, () => {
   console.log(`Application is running at port: 8000`);
 });

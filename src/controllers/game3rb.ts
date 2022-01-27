@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { parseRssToJson } from "../helpers/getRss";
-import { Settings } from "../model/Settings";
-import { Game3rbFeed } from "../model/Game3rbFeed";
+import { Settings, Game3rbFeed } from "../model/";
+
 // import { Mongoose } from "mongoose";
 
 export default class Game3rbController {
