@@ -22,8 +22,15 @@ interface TUser extends mongoose.Document{
     is_active : boolean
 }
 
+interface TList extends mongoose.Document{
+    title : string,
+    description : string,
+    is_resolved : boolean
+}
+
 export {
     TFeed,
     TSettings,
-    TUser
+    TUser,
+    TList
 }
