@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { TUser } from "../common/types";
 import JWT, { Secret } from "jsonwebtoken";
 import { JWT_KEY, SESSION_EXPIRES } from "../config/config";
+import { NodeMailerServices } from "../services/";
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,18 +39,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// userSchema.methods.generateToken = function () {
-//   const token: string = JWT.sign(
-//     {
-//       id: this._id,
-//       user_name: this.user_name,
-//     },
-//     JWT_KEY,
-//     { expiresIn: +SESSION_EXPIRES * 60 }
-//   );
-//   return token;
-// };
-
 userSchema.methods.generateToken = function () {
   const token: string = JWT.sign(
     {
@@ -62,6 +51,10 @@ userSchema.methods.generateToken = function () {
   );
   return token;
 };
+
+userSchema.methods.sendConfirmationEmail = async function(token: string) {
+  return NodeMailerServices.sendConfirmationEmail(this.user_name, this.email, token)
+}
 
 
 

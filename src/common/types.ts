@@ -22,7 +22,8 @@ interface TUser extends mongoose.Document{
     password : string,
     is_active : boolean,
     is_verify: boolean,
-    generateToken() : void
+    generateToken() : string,
+    sendConfirmationEmail(token: string) : void
 }
 
 interface TList extends mongoose.Document{
