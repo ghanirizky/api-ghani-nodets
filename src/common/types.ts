@@ -18,8 +18,10 @@ interface TSettings extends mongoose.Document{
 
 interface TUser extends mongoose.Document{
     user_name : string,
+    email : string,
     password : string,
     is_active : boolean,
+    is_verify: boolean,
     generateToken() : void
 }
 
@@ -31,6 +33,7 @@ interface TList extends mongoose.Document{
 
 interface JwtPayload { 
     id : string,
+    email : string,
     user_name : string,
 }
 

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import JWT from "jsonwebtoken";
+import JWT, { Secret } from "jsonwebtoken";
 import { JWT_KEY, API_KEY } from "../../config/config";
 import { User } from "../../model";
 import { JwtPayload } from "../../common/types";
@@ -12,20 +12,19 @@ export default class ValidationHeader {
   ) => {
     const api_key: any = req.headers["x-api-key"];
 
-    if(!api_key) return res.status(404).send({
-      status: "Error",
-      response_message: "API key not found",
-    });
+    if (!api_key)
+      return res.status(404).send({
+        status: "Error",
+        response_message: "API key not found",
+      });
 
-    if(api_key !== API_KEY) return res.status(404).send({
-      status: "Error",
-      response_message: "API key is incorrect",
-    });
+    if (api_key !== API_KEY)
+      return res.status(404).send({
+        status: "Error",
+        response_message: "API key is incorrect",
+      });
 
-    next()
-
-
-
+    next();
   };
 
   static verifyToken = async (
@@ -50,7 +49,7 @@ export default class ValidationHeader {
         });
       }
 
-      const decode = (await JWT.verify(access_token, JWT_KEY)) as JwtPayload;
+      const decode = (await JWT.verify(access_token, JWT_KEY as Secret)) as JwtPayload;
 
       const user = await User.findById(decode.id);
 
