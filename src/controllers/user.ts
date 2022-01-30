@@ -97,33 +97,23 @@ export default class UserController {
         });
       }
 
-      if (Array.isArray(token)) {
-        return res.status(404).send({
-          status: "Error",
-          response_message: "Token must be a string!",
-        });
-      }
-
       const decode = (await JWT.verify(token, JWT_KEY as Secret)) as JwtPayload;
 
-      if(decode){
-        const user = await User.findById(decode.id);
+      const user = await User.findById(decode.id);
 
-        if (!user)
+      if (!user)
         return res.status(404).send({
           status: "Error",
           response_message: "User not found",
         });
 
-        user.is_verify = true
-        user.save()
-      }
+      user.is_verify = true;
+      user.save();
 
       return res.status(200).json({
         status: "Ok",
-        msg: "Email Verified"
+        msg: "Email Verified",
       });
-
     } catch (error) {
       return res.status(400).send({
         status: "Error",

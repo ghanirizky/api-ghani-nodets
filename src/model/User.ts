@@ -52,7 +52,7 @@ userSchema.methods.generateToken = function () {
   return token;
 };
 
-userSchema.methods.sendConfirmationEmail = async function(token: string) {
+userSchema.methods.sendConfirmationEmail =  function(token: string) {
   return NodeMailerServices.sendConfirmationEmail(this.user_name, this.email, token)
 }
 
