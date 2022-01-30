@@ -3,7 +3,7 @@ import express, { Express, Request, Response } from "express";
 import routes from "./routes"
 import mongoose from "mongoose";
 import morgan from "morgan";
-import { DB_URI } from "./config/config";
+import { DB_URI, PORT } from "./config/config";
 
 const app: Express = express();
 
@@ -27,6 +27,6 @@ app.use((req: Request, res: Response) => {
 });
 
 
-app.listen(8000, () => {
-  console.log(`Application is running at port: 8000`);
+app.listen(PORT, () => {
+  console.log(`Application is running at port: ${PORT}`);
 });

@@ -1,16 +1,12 @@
 import { Request, Response } from "express";
 import { User } from "../model/";
 import bcrypt from "bcrypt";
-import { SALT, JWT_KEY } from "../config/config";
-import JWT from "jsonwebtoken";
+import {hashPassword} from "../helpers/createPassword"
 
 export default class UserController {
   static register = async (req: Request, res: Response) => {
     try {
       const { user_name, password: plain_password } = req.body;
-
-      const gen_salt: string = await bcrypt.genSaltSync(SALT);
-      const hash_password: string= await bcrypt.hashSync(plain_password, gen_salt);
 
       if (plain_password.length < 5)
         return res
@@ -21,6 +17,9 @@ export default class UserController {
         return res
           .status(400)
           .send({ status: "Error", msg: "Username must be more than 5 words" });
+
+      const hash_password: string= await hashPassword(plain_password);
+
 
       await User.create({
         user_name: user_name,
@@ -58,19 +57,10 @@ export default class UserController {
           msg: "Invalid Password",
         });
 
-        const token: string = JWT.sign({
-            id: user._id,
-            user_name: user.user_name
-          
-        }, JWT_KEY )
-
         return res.status(200).json({
           status: "Ok",
-          token : token
+          token : user.generateToken()
         })
-        
-
-
 
     } catch (error) {
       return res.status(400).send({

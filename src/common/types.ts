@@ -19,7 +19,8 @@ interface TSettings extends mongoose.Document{
 interface TUser extends mongoose.Document{
     user_name : string,
     password : string,
-    is_active : boolean
+    is_active : boolean,
+    generateToken() : void
 }
 
 interface TList extends mongoose.Document{
@@ -28,9 +29,15 @@ interface TList extends mongoose.Document{
     is_resolved : boolean
 }
 
+interface JwtPayload { 
+    id : string,
+    user_name : string,
+}
+
 export {
     TFeed,
     TSettings,
     TUser,
-    TList
+    TList,
+    JwtPayload
 }
