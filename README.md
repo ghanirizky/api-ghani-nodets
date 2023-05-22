@@ -1,3 +1,3 @@
 # api-ghani
 
-Some Random API i made when learnign TypeScript in NodeJs
+Some Random API i made when learning TypeScript in NodeJs
